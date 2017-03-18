@@ -1,0 +1,19 @@
+﻿@model NewsletterViewModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+
+<div class="col-md-4 footer-grid w3-f wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+    <h4>Newsletter</h4>
+    <p>
+        Register your email address to recieve our newsletters.
+    </p>
+
+    <div class="newsletter w3agile-f">
+        <form action="#" method="post">
+            <input type="email" name="email" id="txtEmail" value="Email..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email...';}" required="">
+            <input type="button" id="btnSubscribe" value="Subscribe">
+        </form>
+    </div>
+</div>

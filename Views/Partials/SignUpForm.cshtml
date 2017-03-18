@@ -1,0 +1,74 @@
+﻿@model SignUpFormViewModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+<div class="contact w3agile">
+    <div class="container">
+        <div class="contact-main w3l-co">
+
+            <div class="col-md-6 contact-right w3agile-co">
+                <div class="contact-top">
+                    <h3>Sign up</h3>
+                </div>
+                @if (Convert.ToBoolean(TempData["FormSubmitted"]))
+                {
+                    <div>Thanks for registration. The administrator will review your account for approval. We will send an email to you once the account is published.</div>
+                }
+                else
+                {
+                    using (Html.BeginUmbracoForm<SignUpFormSurfaceController>("SubmitForm"))
+                    {
+                        <p>(*) required field</p>
+                        @Html.ValidationSummary()
+                        @Html.AntiForgeryToken()
+                        if (Convert.ToBoolean(TempData["UserExisted"]))
+                        {
+                            <div style="color: red;">The username or email address is existed.</div>
+                        }
+                        <br />
+                        @Html.LabelFor(x => x.UserName)
+                        @Html.TextBoxFor(x => x.UserName, new { @class = "shart" })
+
+                        <br />
+                        <br />
+                        @Html.LabelFor(x => x.Password)
+                        @Html.PasswordFor(x => x.Password, new { @class = "shart" })
+                        <br />
+                        <br />
+
+                        @Html.LabelFor(x => x.ConfirmPassword)
+                        @Html.PasswordFor(x => x.ConfirmPassword, new { @class = "shart" })
+                        <br />
+                        <br />
+
+                        @Html.LabelFor(x => x.FullName)
+                        @Html.TextBoxFor(x => x.FullName, new { @class = "shart" })
+                        <br />
+                        <br />
+
+                        @Html.LabelFor(x => x.Email)
+                        @Html.TextBoxFor(x => x.Email, new { @class = "shart" })
+                        <br />
+                        <br />
+
+                        @Html.LabelFor(x => x.Company)
+                        @Html.TextBoxFor(x => x.Company, new { @class = "shart" })
+                        <br />
+                        <br />
+
+                        @Html.LabelFor(x => x.Address)
+                        @Html.TextBoxFor(x => x.Address, new { @class = "shart" })
+                        <br />
+                        <br />
+                        
+                        <label>&nbsp;</label>
+                        <input type="submit" value="Register">
+                    }
+                }
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+
+    </div>
+</div>

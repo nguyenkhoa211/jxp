@@ -1,0 +1,24 @@
+﻿@model ContactFormViewModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+@if (Convert.ToBoolean(TempData["FormSubmitted"]))
+{
+    <div>Thanks for submitting the form.</div>
+}
+else
+{
+    using (Html.BeginUmbracoForm<ContactUsFormSurfaceController>("SubmitForm"))
+    {
+        @Html.ValidationSummary()
+        @Html.AntiForgeryToken()
+        
+        @Html.TextBoxFor(m => m.Name, new { @class = "long", placeholder = "NAME" })
+        @Html.TextBoxFor(m => m.Email, new { @class = "long", placeholder = "EMAIL" })
+        @Html.TextBoxFor(m => m.Subject, new { @class = "long", placeholder = "SUBJECT" })
+        @Html.TextAreaFor(m => m.Message, new { placeholder = "MESSAGE" })
+
+        <input type="submit" value="Submit" />
+    }
+}

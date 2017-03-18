@@ -1,0 +1,80 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    var aboutUsPage = CurrentPage.AncestorsOrSelf(2).First();
+
+    var teamOverview = aboutUsPage.teamOverview.First();
+    var historyOverview = aboutUsPage.historyOverview.First();
+
+    var teamItems = teamOverview.teamItem.OrderBy("publishDate desc, createDate desc");
+    var historyItems = historyOverview.historyItem.OrderBy("name desc");
+}
+<div class="about agileinfo">
+    <div class="container">
+        <div class="about-main w3l-a">
+            <div class="about-top">
+                <h2>@Umbraco.Field("subheader")</h2>
+                <div class="col-md-4 abouttop-left">
+                    <img src="@CurrentPage.Image" alt="" class="img-responsive">
+                </div>
+                <div class="col-md-8 abouttop-right">
+                    @Umbraco.Field("bodyText")
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+        <div class="team" id="team">
+
+            <h3>@teamOverview.subheader</h3>
+            @{foreach (var item in teamItems)
+                {
+                    <div class="col-md-3 bottom-grid ">
+                        <div class="btm-right">
+                            <img src="@item.image" class="img-responsive" alt=" ">
+                            <div class="captn">
+                                <h4>@item.name</h4>
+                                <p>@item.position </p>
+                                <ul class="captn2">
+                                    <li><a href="@item.facebook" target="_blank" class="icon1"></a></li>
+                                    <li><a href="@item.googlePlus" target="_blank" class="icon2"></a></li>
+                                    <li><a href="@item.instagram" target="_blank" class="icon3"></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="clearfix"></div>
+        </div>
+        <div class="history">
+            <div class="history-top">
+                <h3>@historyOverview.subheader</h3>
+            </div>
+            @{
+                var segment = 0;
+                if( historyItems.Count() / 3 == 0)
+                {
+                    segment = historyItems.Count() / 3;
+                }
+                else
+                {
+                    segment = historyItems.Count() / 3 + 1;
+                }
+                for (var i = 0; i < segment; i++)
+                {
+                    <div class="history-bottom">
+                        @for (var j = i * 3; j < (i + 1) * 3; j++)
+                        {
+                            <div class="col-md-4 history-grids">
+                                <h4>@historyItems[j].name</h4>
+                                <p>@historyItems[j].description</p>
+                            </div>
+                        }
+                    </div>
+                    <div class="clearfix"> </div>
+                }
+            }
+        </div>
+    </div>
+</div>

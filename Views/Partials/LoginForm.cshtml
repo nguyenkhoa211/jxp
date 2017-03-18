@@ -1,0 +1,43 @@
+﻿@model LoginFormViewModel
+@{
+    Html.EnableClientValidation(true);
+    Html.EnableUnobtrusiveJavaScript(true);
+}
+<div class="contact w3agile">
+    <div class="container">
+        <div class="contact-main w3l-co">
+
+            <div class="col-md-6 contact-right w3agile-co">
+                <div class="contact-top">
+                    <h3>Log in</h3>
+
+                </div>
+                @using (Html.BeginUmbracoForm<LoginFormSurfaceController>("SubmitForm"))
+                {
+                    @*if (Convert.ToBoolean(TempData["LoginFail"]))
+                        {
+                            <div style="color: red;">Username or password is not correct.</div>
+                            <br />
+                        }*@
+                    <div>
+                        @Html.ValidationSummary()
+                        @Html.AntiForgeryToken()
+                        <br />
+                        @Html.TextBoxFor(x => x.UserName, new { @class = "shart", placeholder = "USERNAME" })
+                        <br />
+                        <br />
+                        @Html.PasswordFor(x => x.Password, new { @class = "shart", placeholder = "PASSWORD" })
+                        <br />
+                        <br />
+                        <p>Don't have account? <a href="/sign-up">Sign up</a></p>
+                        <br />
+                        <input type="submit" value="Log in">
+                    </div>
+                }
+
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+
+    </div>
+</div>

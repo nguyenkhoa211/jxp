@@ -1,0 +1,118 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    var homePage = CurrentPage.AncestorsOrSelf(1).First();
+
+    var introductionOverview = homePage.introductionOverview.First();
+    var testimonialOverview = homePage.testimonialOverview.First();
+
+    var introductionItems = introductionOverview.introductionItem.OrderBy("publishDate desc, createDate desc").Take(4);
+    var testimonialItems = testimonialOverview.testimonialItem.OrderBy("publishDate desc, createDate desc").Take(3);
+}
+<!--welcome start here-->
+<div class="welcome w3l">
+    <div class="container">
+        <div class="wel-main">
+            <div class="wel-top">
+                <h3>@introductionOverview.subheader</h3>
+            </div>
+            <div class="wel-bottom">
+
+                <div class="col-md-6 wel-left wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+                    @{
+                        var countEven = 0;
+                        foreach (var item in introductionItems)
+                        {
+                            countEven++;
+                            if (countEven % 2 == 0)
+                            {
+                                <div class="wel-block">
+                                    <div class="wel-text">
+                                        <h4>@item.Name</h4>
+                                        <p>@item.bodyText</p>
+                                    </div>
+                                    <div class="wel-img">
+                                        <img src="@item.image" alt="" class="img-responsive">
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            }
+                        }
+                    }
+                </div>
+                <div class="col-md-6 wel-right wow fadeInRight animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
+                    @{
+                        var countOdd = 0;
+                        foreach (var item in introductionItems)
+                        {
+                            countOdd++;
+                            if (countOdd % 2 != 0)
+                            {
+                                <div class="wel-block">
+                                    <div class="wel-text">
+                                        <h4>@item.Name</h4>
+                                        <p>@item.bodyText</p>
+                                    </div>
+                                    <div class="wel-img">
+                                        <img src="@item.image" alt="" class="img-responsive">
+                                    </div>
+                                    <div class="clearfix"> </div>
+                                </div>
+                            }
+                        }
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--welcome end here-->
+<!--testimonial start here-->
+<div class="testimo w3ls">
+    <div class="container">
+        <div class="testimo-main wow fadeInUp animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+            <h3>@Umbraco.Field("welcomeHeader")</h3>
+            <p>@Umbraco.Field("welcomeContent")</p>
+        </div>
+    </div>
+</div>
+<!--testimonial end here-->
+<!--our admissions start here-->
+<div class="admission wthree">
+    <div class="container">
+        <div class="admissions-main">
+            <div class="admission-top">
+                <h3>@testimonialOverview.subheader</h3>
+            </div>
+            <div class="admission-bottom">
+                @foreach (var item in testimonialItems)
+                {
+                    <div class="col-md-4 admission-left wow fadeInUp animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+                        <span class="quot1"> </span>
+                        <div class="quot-text">
+                            <p>@item.bodyText</p>
+                            <h4>- @item.author</h4>
+                        </div>
+                        <div class="clearfix"> </div>
+                    </div>
+                }
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--our admissions end here-->
+<!--course strat here-->
+<div class="course agile">
+    <div class="col-md-6 course-left wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+    </div>
+    <div class="col-md-6 course-right wow fadeInRight animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
+        <h3>@Umbraco.Field("serviceSubheader")</h3>
+        @Umbraco.Field("serviceContent")
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<!--courses end here-->

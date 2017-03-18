@@ -1,0 +1,37 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    var technologiesPage = CurrentPage.AncestorsOrSelf(2).First();
+
+    var technologyOverview = technologiesPage.technologyOverview.First();
+
+    var technologyItems = technologyOverview.technologyItem.OrderBy("publishDate desc, createDate desc");
+}
+<div class="gallery w3" id="gallery">
+    <div class="container">
+        <div class="gallery-main">
+            <div class="gallery-top">
+                <h2>@technologyOverview.subheader</h2>
+        </div>
+        <div class="gallery-bott">
+            @foreach (var item in technologyItems)
+            {
+                <div class="col-md-4 col1 gallery-grid">
+                    <a href="@item.image" rel="title" class="b-link-stripe b-animate-go  thickbox">
+                        <figure class="effect-bubba">
+                            <img class="img-responsive" src="@item.image" alt="">
+                            <figcaption>
+                                <h4 class="gal"> @item.name</h4>
+                                <p class="gal1">@item.description</p>
+                            </figcaption>
+                        </figure>
+                    </a>
+                </div>
+            }
+            
+            <div class="clearfix"> </div>
+        </div>
+    </div>
+</div>
+</div>

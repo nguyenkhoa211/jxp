@@ -1,0 +1,18 @@
+﻿@if (SessionManager.UserLogin != null)
+{
+    <li><i class="fa fa-user"></i> <a href="/products">@SessionManager.UserLogin.UserName</a></li>
+    <li>|</li>
+    <li>
+        @using (Html.BeginUmbracoForm<AuthenticationFormSurfaceController>("LogOff", null, new { id = "logoutForm" }))
+        {
+            @Html.AntiForgeryToken()
+            <a href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+        }
+    </li>
+}
+else
+{
+    <li><i class="fa fa-user"></i> <a href="/login">Login</a></li>
+    <li>|</li>
+    <li><a href="/sign-up">Sign up</a></li>
+}

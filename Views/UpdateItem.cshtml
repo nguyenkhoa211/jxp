@@ -1,0 +1,29 @@
+﻿@inherits UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    // If the editor has not explicitly provided the "Page title" property page
+    // then just show the name of the page otherwise show the provided title
+    var pageTitle = string.IsNullOrWhiteSpace(CurrentPage.Title)
+        ? CurrentPage.Name
+        : CurrentPage.Title;
+}
+<div class="about agileinfo">
+    <div class="container">
+        <div class="about-main w3l-a">
+            <div class="about-top">
+                <h2>Updates</h2>
+                <h5><a href="/updates">Updates</a><span> &nbsp;> @pageTitle</span></h5>
+                <div class="col-md-4 abouttop-left">
+                    <img src="@CurrentPage.Image" alt="" class="img-responsive">
+                </div>
+                <div class="col-md-8 abouttop-right">
+                    <h4>@pageTitle</h4>
+                    @CurrentPage.BodyText
+                </div>
+                <div class="clearfix">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

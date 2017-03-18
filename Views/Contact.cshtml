@@ -1,0 +1,48 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "umbLayout.cshtml";
+}
+<div class="contact w3agile">
+	<div class="container">
+		<div class="contact-main w3l-co">
+			<div class="col-md-6 contact-left">
+				<div class="contact-top">
+					<h2>@Umbraco.Field("subheader")</h2>
+					<p>@Umbraco.Field("subheaderContent")</p>
+			    </div>
+				<div class="conta-1 wthree-co">
+					<div class="con-phone">
+						<span class="con-ph"> </span>
+						<div class="con-para">
+							<h6>Phone</h6>
+							<p>@Umbraco.Field("phone")</p>
+						</div>
+						<div class="clearfix"> </div>
+					</div>
+				</div>
+				<div class="conta-2 agile-co">
+					<div class="con-address">
+						<span class="con-location"> </span>
+						<div class="con-para">
+							<h6>Address</h6>
+							<p>@Umbraco.Field("address")</p>
+						</div>
+					</div>
+				</div>
+			 </div>
+			<div class="col-md-6 contact-right w3agile-co">
+				<div class="contact-top">
+					<h3>@Umbraco.Field("contactFormSubheader")</h3>
+					<p>@Umbraco.Field("contactFormContent")</p>
+				</div>
+                @{
+                    Html.RenderPartial("~/Views/Partials/ContactUsForm.cshtml", new ContactFormViewModel());
+                }
+				</div>
+		  <div class="clearfix"> </div>
+		</div>
+		<div class="map agileits-mp">
+			<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3462.499643381676!2d-95.45801308561383!3d29.79210643740517!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8640c6c025d4b2ff%3A0xb4df01a12447d5f0!2s4476+W+12th+St%2C+Houston%2C+TX+77055!5e0!3m2!1sen!2s!4v1485405606574" style="border:0" allowfullscreen=""></iframe>
+		</div>
+	</div>
+</div>

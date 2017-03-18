@@ -1,0 +1,59 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    var servicesPage = CurrentPage.AncestorsOrSelf(2).First();
+
+    var serviceOverview = servicesPage.serviceOverview.First();
+    var serviceBottomOverview = servicesPage.serviceBottomOverview.First();
+
+    var serviceItems = serviceOverview.serviceItem.OrderBy("publishDate desc, createDate desc");
+    var serviceBottomItems = serviceBottomOverview.serviceBottomItem.OrderBy("publishDate desc, createDate desc");
+}
+<div class="service agileits">
+    <div class="container">
+        <div class="ser-top">
+            <h2>@serviceOverview.subheader</h2>
+            <p> @serviceOverview.description</p>
+        </div>
+        <div class="service-head">
+
+            <div class="ser-head1">
+                @foreach (var item in serviceItems)
+                {
+                    <div class="col-md-4 ser-grid ">
+                        <div class="hi-icon-effect-7 hi-icon-effect-7a">
+                            <i class="glyphicon glyphicon-cog hi-icon "> </i>
+                        </div>
+
+                        <h3>@item.name</h3>
+                        <p>@item.description</p>
+                    </div>
+                }
+                <div class="clearfix"> </div>
+            </div>
+
+        </div>
+        <div class="servi-btm">
+            <div class="wel-left">
+                @{
+                    foreach (var item in serviceBottomItems)
+                    {
+                        <div class="col-md-6 wel-block-1">
+
+                            <div class="wel-text">
+                                <h4>@item.item</h4>
+                                <p>@item.description</p>
+                            </div>
+                            <div class="wel-img">
+                                <img src="@item.image" alt="" class="img-responsive">
+                            </div>
+                            <div class="clearfix"> </div>
+                        </div>
+                    }
+                }
+                <div class="clearfix"> </div>
+            </div>
+        </div>
+    </div>
+</div>

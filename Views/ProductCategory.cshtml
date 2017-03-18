@@ -1,0 +1,64 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "umbLayout.cshtml";
+
+    var categoryList = new List<CategoryViewModel>();
+
+    var productsPage = CurrentPage.AncestorsOrSelf(2).First();
+
+    var categoriesPage = productsPage.productCategory;
+    foreach (var cat in categoriesPage)
+    {
+        var subCategories = new List<SubCategoryViewModel>();
+        var productsOverview = cat.productOverview;
+        foreach (var sub in productsOverview)
+        {
+            subCategories.Add(new SubCategoryViewModel { SubCategoryName = sub.Name, SubCategoryUrl = sub.Url });
+        }
+        var category = new CategoryViewModel();
+        category.CategoryName = cat.Name;
+        category.CategoryUrl = cat.Url;
+        category.SubCategories = subCategories;
+
+        categoryList.Add(category);
+    }
+}
+<div class="gallery w3" id="gallery">
+    <div class="container">
+        <div class="gallery-main">
+            <div class="gallery-top">
+                <h2>Product Catalog</h2>
+                @*<h5><a href="javascript:void(0)">Products</a><span>&nbsp;>&nbsp;</span><a href="javascript:void(0)">@categoriesPage.name</a> <span> &nbsp;> @CurrentPage.name</span></h5>*@
+            </div>
+            @if (categoryList != null && categoryList.Count > 0)
+            {
+                <div class="gallery-bott">
+                    <ul style="list-style: none;">
+                        @foreach (var item in categoryList)
+                        {
+                            <li>@item.CategoryName</li>
+                            if(item.SubCategories.Count > 0)
+                            {
+                                <li>
+                                    <ul>
+                                        @foreach (var sub in item.SubCategories)
+                                        {
+                                            <li><a href="@sub.SubCategoryUrl">@sub.SubCategoryName</a></li>
+                                        }
+                                    </ul>
+                                </li>
+                            }
+                        }
+                    </ul>
+                    
+
+                    <div class="clearfix"> </div>
+                </div>
+                @*<div class="gallery-top">
+                    <h2><a href="javascript:void(0)" class="seemoreproduct">See more</a></h2>
+                </div>*@
+            }
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,7 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+	Layout = "umbLayout.cshtml";
+}
+@{
+    Html.RenderPartial("~/Views/Partials/LoginForm.cshtml", new LoginFormViewModel());
+}

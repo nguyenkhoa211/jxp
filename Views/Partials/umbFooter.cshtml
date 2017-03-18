@@ -1,0 +1,63 @@
+﻿@inherits UmbracoTemplatePage
+<div class="footer agileits-f">
+    <div class="container">
+        <div class="col-md-4 footer-grid w3-f wow fadeInLeft animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInLeft;">
+            <h4>JXP System</h4>
+            <p>
+                Register by your email to recieve our newsletters.
+            </p>
+
+            <div class="newsletter w3agile-f">
+                <form name="newsletterForm" method="post">
+                    <input type="email" name="email" value="Email..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Email...';}" id="txtEmail" />
+                    <input type="button" value="Subscribe" onclick="submitNewsletter()">
+                </form>
+                <div id="doneSubmit"></div>
+            </div>
+        </div>
+        <div class="col-md-4 footer-grid agileinfo-f wow fadeInUp animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInUp;">
+            <h3>Gallery</h3>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g6.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g5.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g4.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g3.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g1.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="footer-grid-left agile-f">
+                <a href="javascript:void(0)"><img src="/images/g2.jpg" alt="" class="img-responsive"></a>
+            </div>
+            <div class="clearfix"> </div>
+        </div>
+        <div class="col-md-4 footer-grid wthree-f wow fadeInRight animated animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: fadeInRight;">
+            <h3>Contact Info</h3>
+            <ul class="footer-address">
+                <li><span class="glyphicon glyphicon-home" aria-hidden="true"></span> 4476 W. 12th Street, Houston, Texas 77055 </li>
+                <li><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span><a href="mailto:admin@gojxp.com">admin@gojxp.com</a></li>
+                <li><span class="glyphicon glyphicon-earphone" aria-hidden="true"></span> 713-464-6374</li>
+            </ul>
+        </div>
+        <div class="clearfix"> </div>
+    </div>
+</div>
+<script language="javascript" type="text/javascript">
+    function submitNewsletter() {
+        var email = $('#txtEmail').val();
+        if (email != '' && email != undefined) {
+            $.post('/umbraco/api/NewsletterApi/SubmitForm/?email=' + email, function (response) {
+                if (response.Success) {
+                    $('#txtEmail').val('');
+                    $('#doneSubmit').html(response.Message);
+                }
+            });
+        }
+    }
+</script>
