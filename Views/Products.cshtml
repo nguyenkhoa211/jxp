@@ -9,31 +9,48 @@
 
     var categoriesPage = productsPage.productCategory.First();
 
+    var count = 0;
     //var productOverview = categoriesPage.productOverview.First();
 
     if (SessionManager.UserLogin != null)
     {
         isLogin = true;
         const int companyNodeId = 1322;
-        var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
-        foreach (var item in productItems)
+        var contentService = ApplicationContext.Services.ContentService;
+        var company = contentService.GetChildren(companyNodeId).FirstOrDefault(x => x.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase));
+        if (company != null)
         {
-            var companyList = item.assignedCompanies.ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            var companyNameList = new List<string>();
-
-            if (companyList.Length > 0)
+            var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
+            var existedProduct = company.GetValue<string>("assignedProducts").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            foreach (var item in productItems)
             {
-                for (var i = 0; i < companyList.Length; i++)
+                if (existedProduct.Contains((string)item.Id.ToString()))
                 {
-                    var contentService = ApplicationContext.Services.ContentService;
-                    var company = contentService.GetChildren(companyNodeId).Where(x => x.Id.ToString() == companyList[i]).FirstOrDefault();
-                    if (company != null && company.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        products.Add(item);
-                    }
+                    products.Add(item);
                 }
             }
         }
+
+
+        //var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
+        //foreach (var item in productItems)
+        //{
+        //    var companyList = item.assignedCompanies.ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+        //    var companyNameList = new List<string>();
+
+        //    if (companyList.Length > 0)
+        //    {
+        //        for (var i = 0; i < companyList.Length; i++)
+        //        {
+        //            var contentService = ApplicationContext.Services.ContentService;
+        //            var company = contentService.GetChildren(companyNodeId).Where(x => x.Id.ToString() == companyList[i]).FirstOrDefault();
+        //            if (company != null && company.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase))
+        //            {
+        //                products.Add(item);
+        //            }
+        //        }
+        //    }
+        //}
     }
 }
 <div class="gallery w3" id="gallery">
@@ -43,65 +60,54 @@
                 <h2>Products</h2>
                 <h5><a href="/products">Products</a><span>&nbsp;>&nbsp;</span><a href="javascript:void(0)">@categoriesPage.name</a> <span> &nbsp;> @CurrentPage.name</span></h5>
             </div>
-            @if (products != null && products.Count > 0)
+            
+            @if (products.Count > 0)
             {
                 <div class="gallery-bott">
-                    @{
-                        var count = 0;
-                        foreach (var item in products)
-                        {
-                            count++;
-                            if (count <= 6)
-                            {
-                                <div class="col-md-4 col1" id="@count" style="margin-bottom: 30px;">
-                                    <a href="@item.Url">
-                                        <figure class="effect-bubba">
-                                            <img class="img-responsive" src="@item.image" alt="">
-                                            <figcaption>
-                                                <h4 class="gal"> @item.name</h4>
-                                                <p class="gal1">@item.description</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="col-md-4 col1" id="@count" style="display: none; margin-bottom: 30px;">
-                                    <a href="@item.Url">
-                                        <figure class="effect-bubba">
-                                            <img class="img-responsive" src="@item.image" alt="">
-                                            <figcaption>
-                                                <h4 class="gal"> @item.name</h4>
-                                                <p class="gal1">@item.description</p>
-                                            </figcaption>
-                                        </figure>
-                                    </a>
-                                </div>
-                            }
-                        }
+                    @foreach (var item in products)
+                    {
+                        count++;
+                        <div class="col-md-4 col1" id="@count" style="margin-bottom: 30px;@(count <= 6 ? string.Empty : "display: none;")">
+                            <a href="@item.Url">
+                                <figure class="effect-bubba">
+                                    <img class="img-responsive" src="@item.image" alt="">
+                                    <figcaption>
+                                        <h4 class="gal"> @item.name</h4>
+                                        <p class="gal1">@item.description</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </div>
                     }
                     <div class="clearfix"> </div>
                 </div>
-                <div class="gallery-top">
-                    <h2><a href="javascript:void(0)" class="seemoreproduct">See more</a></h2>
-                </div>
-                        }
-                        else
-                        {
-                            if (isLogin)
-                            {
-                                <div class="gallery-top">
-                                    <p>There are no assigned products for your company.</p>
-                                </div>
-                            }
-                            else
-                            {
-                                <div class="gallery-top">
-                                    <p>Please <a href="/login">login</a> before accessing assigned products for your company.</p>
-                                </div>
-                            }
-                        }
+                if (count > 6)
+                {
+                    <div class="gallery-top">
+                        <h2>
+                            <a href="javascript:void(0)" class="seemoreproduct">See more</a>
+                        </h2>
+                    </div>
+                }
+
+            }
+            else
+            {
+                if (isLogin)
+                {
+                    <div class="gallery-top">
+                        <p>There are no assigned products for your company.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="gallery-top">
+                        <p>
+                            Please <a href="/login">login</a> before accessing assigned products for your company.
+                        </p>
+                    </div>
+                }
+            }
 
         </div>
     </div>

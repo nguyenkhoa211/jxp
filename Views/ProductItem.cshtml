@@ -6,22 +6,24 @@
     var subCategory = CurrentPage.AncestorsOrSelf(4).First();
 }
 <div class="about agileinfo">
-  <div class="container"> 
-  	<div class="about-main w3l-a">
-		   <div class="about-top">
-			<h2>@CurrentPage.name</h2>
-			<h5><a href="javascript:void(0)">Products</a><span>&nbsp;>&nbsp;</span><a href="javascript:void(0)">@categoriesPage.name</a><span>&nbsp;>&nbsp;</span><a href="@subCategory.Url">@subCategory.name</a><span> &nbsp;> @CurrentPage.name</span></h5>
-			
-			<div class="col-md-4 abouttop-left">
-                <img src="@CurrentPage.Image" alt="" class="img-responsive">
-			</div>
-			<div class="col-md-8 abouttop-right">
-				<h4>@CurrentPage.name</h4>
-				@CurrentPage.description				
-			</div>
-			  <div class="clearfix">
-			  </div>			  
-		    </div>
-	</div>
-	</div>
+    <div class="container">
+        <div class="about-main w3l-a">
+            <div class="about-top">
+                <h2>@CurrentPage.name</h2>
+                <h5><a href="javascript:void(0)">Products</a><span>&nbsp;>&nbsp;</span><a href="javascript:void(0)">@categoriesPage.name</a><span>&nbsp;>&nbsp;</span><a href="@subCategory.Url">@subCategory.name</a><span> &nbsp;> @CurrentPage.name</span></h5>
+
+                <div class="col-md-4 abouttop-left">
+                    <img src="@CurrentPage.Image" alt="" class="img-responsive">
+                    <a href="" class="btn btn-warning btn-sizing">Sizing</a>
+                </div>
+                <div class="col-md-8 abouttop-right">
+                    <h4>@CurrentPage.name</h4>
+                    @CurrentPage.description
+                </div>
+
+                <div class="clearfix">
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

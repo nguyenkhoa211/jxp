@@ -19,7 +19,7 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e28d002eeb93b193")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "8807952c4ccf8705")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedContentModels
@@ -1747,6 +1747,15 @@ namespace Umbraco.Web.PublishedContentModels
 		public string Address
 		{
 			get { return this.GetPropertyValue<string>("address"); }
+		}
+
+		///<summary>
+		/// Assigned products
+		///</summary>
+		[ImplementPropertyType("assignedProducts")]
+		public string AssignedProducts
+		{
+			get { return this.GetPropertyValue<string>("assignedProducts"); }
 		}
 	}
 
