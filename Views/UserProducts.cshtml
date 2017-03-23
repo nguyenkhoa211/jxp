@@ -1,0 +1,87 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+@{
+    Layout = "PortalLayout.cshtml";
+
+    var isLogin = false;
+
+    var products = new List<IContent>();
+
+    var count = 0;
+
+    if (SessionManager.UserLogin != null)
+    {
+        isLogin = true;
+        const int companyNodeId = 1322;
+        var contentService = ApplicationContext.Services.ContentService;
+        var company = contentService.GetChildren(companyNodeId).FirstOrDefault(x => x.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase));
+        if (company != null)
+        {
+            var existedProduct = company.GetValue<string>("assignedProducts").Split(',').Select(int.Parse);
+
+            var productItems = contentService.GetByIds(existedProduct);
+            if (productItems != null)
+            {
+                products = productItems.ToList();
+            }
+        }
+
+    }
+}
+<div class="gallery w3" id="gallery">
+    <div class="container">
+        <div class="gallery-main">
+            <div class="gallery-top">
+                <h2>Products</h2>
+            </div>
+
+            @if (products.Count > 0)
+            {
+                <div class="gallery-bott">
+                    @foreach (var item in products)
+                    {
+                        count++;
+                        <div class="col-md-4 col1" id="@count" style="margin-bottom: 30px;@(count <= 6 ? string.Empty : "display: none;")">
+                            <a href="#">
+                                <figure class="effect-bubba">
+                                    <img class="img-responsive" src="@(item.GetValue("image"))" alt="">
+                                    <figcaption>
+                                        <h4 class="gal"> @item.Name</h4>
+                                        <p class="gal1">@(item.GetValue<string>("description"))</p>
+                                    </figcaption>
+                                </figure>
+                            </a>
+                        </div>
+                    }
+                    <div class="clearfix"> </div>
+                </div>
+                if (count > 6)
+                {
+                    <div class="gallery-top">
+                        <h2>
+                            <a href="javascript:void(0)" class="seemoreproduct">See more</a>
+                        </h2>
+                    </div>
+                }
+
+            }
+            else
+            {
+                if (isLogin)
+                {
+                    <div class="gallery-top">
+                        <p>There are no assigned products for your company.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="gallery-top">
+                        <p>
+                            Please <a href="/login">login</a> before accessing assigned products for your company.
+                        </p>
+                    </div>
+                }
+            }
+
+        </div>
+    </div>
+</div>

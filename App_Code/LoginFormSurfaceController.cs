@@ -41,7 +41,7 @@ public class LoginFormSurfaceController : SurfaceController
                 CompanyName = user.GetValue<string>("company"),
                 CompanyAddress = user.GetValue<string>("address")
             };
-            return RedirectToUmbracoPage(1214);
+            return RedirectToUmbracoPage(1373);
         }
         else
         {

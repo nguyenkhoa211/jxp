@@ -4,54 +4,17 @@
     var isLogin = false;
 
     var products = new List<dynamic>();
-
+    var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
+    foreach (var item in productItems)
+    {
+        products.Add(item);
+    }
     var productsPage = CurrentPage.AncestorsOrSelf(2).First();
 
     var categoriesPage = productsPage.productCategory.First();
 
     var count = 0;
-    //var productOverview = categoriesPage.productOverview.First();
 
-    if (SessionManager.UserLogin != null)
-    {
-        isLogin = true;
-        const int companyNodeId = 1322;
-        var contentService = ApplicationContext.Services.ContentService;
-        var company = contentService.GetChildren(companyNodeId).FirstOrDefault(x => x.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase));
-        if (company != null)
-        {
-            var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
-            var existedProduct = company.GetValue<string>("assignedProducts").Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-            foreach (var item in productItems)
-            {
-                if (existedProduct.Contains((string)item.Id.ToString()))
-                {
-                    products.Add(item);
-                }
-            }
-        }
-
-
-        //var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
-        //foreach (var item in productItems)
-        //{
-        //    var companyList = item.assignedCompanies.ToString().Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
-        //    var companyNameList = new List<string>();
-
-        //    if (companyList.Length > 0)
-        //    {
-        //        for (var i = 0; i < companyList.Length; i++)
-        //        {
-        //            var contentService = ApplicationContext.Services.ContentService;
-        //            var company = contentService.GetChildren(companyNodeId).Where(x => x.Id.ToString() == companyList[i]).FirstOrDefault();
-        //            if (company != null && company.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase))
-        //            {
-        //                products.Add(item);
-        //            }
-        //        }
-        //    }
-        //}
-    }
 }
 <div class="gallery w3" id="gallery">
     <div class="container">
@@ -93,20 +56,9 @@
             }
             else
             {
-                if (isLogin)
-                {
-                    <div class="gallery-top">
-                        <p>There are no assigned products for your company.</p>
-                    </div>
-                }
-                else
-                {
-                    <div class="gallery-top">
-                        <p>
-                            Please <a href="/login">login</a> before accessing assigned products for your company.
-                        </p>
-                    </div>
-                }
+                <div class="gallery-top">
+                    <p>There are no assigned products for this category.</p>
+                </div>
             }
 
         </div>
