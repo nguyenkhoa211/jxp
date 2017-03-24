@@ -4,7 +4,7 @@
 
     var isLogin = false;
 
-    var products = new List<IContent>();
+    var products = new List<IPublishedContent>();
 
     var count = 0;
 
@@ -17,8 +17,7 @@
         if (company != null)
         {
             var existedProduct = company.GetValue<string>("assignedProducts").Split(',').Select(int.Parse);
-
-            var productItems = contentService.GetByIds(existedProduct);
+            var productItems = Umbraco.TypedContent(existedProduct);
             if (productItems != null)
             {
                 products = productItems.ToList();
@@ -43,10 +42,10 @@
                         <div class="col-md-4 col1" id="@count" style="margin-bottom: 30px;@(count <= 6 ? string.Empty : "display: none;")">
                             <a href="#">
                                 <figure class="effect-bubba">
-                                    <img class="img-responsive" src="@(item.GetValue("image"))" alt="">
+                                    <img class="img-responsive" src="@Url.GetCropUrl(item, "image", "Image Product")" alt="">
                                     <figcaption>
                                         <h4 class="gal"> @item.Name</h4>
-                                        <p class="gal1">@(item.GetValue<string>("description"))</p>
+                                        <p class="gal1">@(item.GetPropertyValue("description"))</p>
                                     </figcaption>
                                 </figure>
                             </a>
