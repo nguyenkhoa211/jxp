@@ -22,6 +22,6 @@ public class AuthenticationFormSurfaceController : SurfaceController
     {
         SessionManager.Clear();
 
-        return CurrentUmbracoPage();
+        return RedirectToUmbracoPage(1056);
     }
 }

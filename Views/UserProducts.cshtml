@@ -1,86 +1,58 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits UmbracoViewPage<UserProductsModel>
 @{
     Layout = "PortalLayout.cshtml";
+}
 
-    var isLogin = false;
+<!-- Company -->
+@if (Model.Company != null)
+{
+    <section id="banner">
+        <div class="content">
+            <header>
+                <h1>
+                    @Model.Company.Name
+                </h1>
+                <p>@Model.Company.GetPropertyValue("address")</p>
+            </header>
+            <p>@Model.Company.GetPropertyValue("description")</p>
+            <ul class="actions">
+                <li><a href="javascript:void(0)" class="button big">Learn More</a></li>
+            </ul>
+        </div>
+        <span class="image object">
+            <img src="@Url.GetCropUrl(Model.Company, "image", "Image Company")" alt="" />
+        </span>
+    </section>
+}
 
-    var products = new List<IPublishedContent>();
 
-    var count = 0;
+<!-- Product -->
 
-    if (SessionManager.UserLogin != null)
-    {
-        isLogin = true;
-        const int companyNodeId = 1322;
-        var contentService = ApplicationContext.Services.ContentService;
-        var company = contentService.GetChildren(companyNodeId).FirstOrDefault(x => x.Name.Equals(SessionManager.UserLogin.CompanyName, StringComparison.OrdinalIgnoreCase));
-        if (company != null)
+<section>
+    <header class="major">
+        <h2>Products</h2>
+    </header>
+
+    <div class="posts" data-pageindex="1">
+        @if (Model.Products != null && Model.Products.Any())
         {
-            var existedProduct = company.GetValue<string>("assignedProducts").Split(',').Select(int.Parse);
-            var productItems = Umbraco.TypedContent(existedProduct);
-            if (productItems != null)
+            foreach (var item in Model.Products)
             {
-                products = productItems.ToList();
+                <article>
+                    <a href="javascript:void(0)" class="image"><img src="@Url.GetCropUrl(item, "image", "Image Product")" alt="" /></a>
+                    <h3>@item.Name</h3>
+                    <p>@item.GetPropertyValue("description")</p>
+                    <ul class="actions">
+                        <li><a href="@Url.Action("Detail","Products", new {id = item.UrlName})" class="button">More</a></li>
+                    </ul>
+                </article>
             }
         }
-
-    }
-}
-<div class="gallery w3" id="gallery">
-    <div class="container">
-        <div class="gallery-main">
-            <div class="gallery-top">
-                <h2>Products</h2>
-            </div>
-
-            @if (products.Count > 0)
-            {
-                <div class="gallery-bott">
-                    @foreach (var item in products)
-                    {
-                        count++;
-                        <div class="col-md-4 col1" id="@count" style="margin-bottom: 30px;@(count <= 6 ? string.Empty : "display: none;")">
-                            <a href="#">
-                                <figure class="effect-bubba">
-                                    <img class="img-responsive" src="@Url.GetCropUrl(item, "image", "Image Product")" alt="">
-                                    <figcaption>
-                                        <h4 class="gal"> @item.Name</h4>
-                                        <p class="gal1">@(item.GetPropertyValue("description"))</p>
-                                    </figcaption>
-                                </figure>
-                            </a>
-                        </div>
-                    }
-                    <div class="clearfix"> </div>
-                </div>
-                if (count > 6)
-                {
-                    <div class="gallery-top">
-                        <h2>
-                            <a href="javascript:void(0)" class="seemoreproduct">See more</a>
-                        </h2>
-                    </div>
-                }
-
-            }
-            else
-            {
-                if (isLogin)
-                {
-                    <div class="gallery-top">
-                        <p>There are no assigned products for your company.</p>
-                    </div>
-                }
-                else
-                {
-                    <div class="gallery-top">
-                        <p>
-                            Please <a href="/login">login</a> before accessing assigned products for your company.
-                        </p>
-                    </div>
-                }
-            }
-
-        </div>
+        else
+        {
+            <article>
+                <p>There are no assigned products for your company.</p>
+            </article>
+        }
     </div>
-</div>
+</section>

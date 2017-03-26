@@ -25,7 +25,7 @@ public class SignUpFormSurfaceController : SurfaceController
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<ActionResult> SubmitForm(SignUpFormViewModel model)
+    public ActionResult SubmitForm(SignUpFormViewModel model)
     {
         if (!ModelState.IsValid)
         {

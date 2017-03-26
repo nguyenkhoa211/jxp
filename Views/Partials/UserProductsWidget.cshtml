@@ -1,0 +1,16 @@
+﻿@model UserProductsModel
+    
+@if (Model[Model.PageIndex] != null && Model[Model.PageIndex].Any())
+{
+    foreach (var item in Model[Model.PageIndex])
+    {
+        <article>
+            <a href="javascript:void(0)" class="image"><img src="@Url.GetCropUrl(item, "image", "Image Product")" alt="" /></a>
+            <h3>@item.Name</h3>
+            <p>@(item.GetPropertyValue("description"))</p>
+            <ul class="actions">
+                <li><a href="@Url.Action("Detail","Products", new {id = item.UrlName})" class="button">More</a></li>
+            </ul>
+        </article>
+    }
+}

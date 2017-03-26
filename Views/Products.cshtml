@@ -1,7 +1,6 @@
 ﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
 @{
     Layout = "umbLayout.cshtml";
-    var isLogin = false;
 
     var products = new List<dynamic>();
     var productItems = CurrentPage.productItem.OrderBy("publishDate desc, createDate desc");
