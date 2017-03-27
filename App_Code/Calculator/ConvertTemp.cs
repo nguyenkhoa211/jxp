@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
+﻿
 namespace Calculator
 {
-    /// <summary>
-    /// Summary description for ConvertTemp
-    /// </summary>
     public class ConvertTemp
     {
         public string UnitTemp { get; set; }
-        public decimal CTemp { get; set; }
-        public decimal Temp { get; set; }
-        public decimal TempR { get; set; }
+        public double CTemp { get; set; }
+        public double Temp { get; set; }
+        public double TempR { get; set; }
 
     }
 
