@@ -1,10 +1,48 @@
-﻿@inherits Umbraco.Web.Mvc.UmbracoTemplatePage
+﻿@inherits UmbracoViewPage<SizingStep1>
 @{
-	Layout = "PortalLayout.cshtml";
+    Layout = "PortalLayout.cshtml";
 }
 
-@ViewBag.Step
-@using (Html.BeginForm("SizingStep1", "Products", FormMethod.Post))
-{
+<section>
+    <header class="main">
+        <h1>@Model.ProductName</h1>
+    </header>
 
-}
+    @using (Html.BeginForm("SizingStep1", "Products", FormMethod.Post))
+    {
+        <div class="row uniform box">
+            <div class="12u 12u$(small)">
+                <h3>JXP @Model.ProductName Sizing. Please enter the information below</h3>
+                @Html.HiddenFor(m => m.ProductId)
+            </div>
+            <div class="2u 12u$(small)">
+                <span>Operating Temp:</span>
+            </div>
+            <div class="2u 12u$(small)">
+                @Html.DropDownList("UnitTemp")
+            </div>
+            <div class="2u 12u$(small)">
+                @Html.TextBoxFor(m => m.CTemp, new { type = "number", placeholder = "CTemp", min = "0", step = "0.001" })
+            </div>
+            <div class="2u 12u$(small)">
+                @if (Model.ResultTemp > 0)
+                {
+                    <span>Temp: @Model.ResultTemp</span>
+                }
+            </div>
+            <div class="2u 12u$(small)">
+                @if (Model.ResultTempR > 0)
+                {
+                    <span>TempR: @Model.ResultTempR</span>
+                }
+            </div>
+            <!-- Break -->
+            <div class="12u$">
+                <ul class="actions">
+                    <li><input type="reset" value="Reset" /></li>
+                    <li><input type="submit" value="Submit" class="special" /></li>
+                </ul>
+            </div>
+        </div>
+    }
+</section>
