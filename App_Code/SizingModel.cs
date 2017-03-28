@@ -1,29 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using Umbraco.Core.Models;
+﻿using Umbraco.Core.Models;
 using Umbraco.Web;
 using Umbraco.Web.Models;
 
-/// <summary>
-/// Summary description for UserProductsModel
-/// </summary>
-public class SizingModel
+public class SizingModel : RenderModel
 {
-
-}
-
-public class SizingStep1 : RenderModel
-{
-    public SizingStep1() : base(UmbracoContext.Current.ContentCache.GetById(1373))
+    public SizingModel() : base(UmbracoContext.Current.ContentCache.GetById(1373))
     {
 
     }
-    public SizingStep1(IPublishedContent content) : base(content)
+    public SizingModel(IPublishedContent content) : base(content)
     {
         CZcomp = 1;
     }
+    public string SizingName { get; set; }
     public string ProductId { get; set; }
     public string ProductName { get; set; }
     public string UnitTemp { get; set; }
@@ -58,9 +47,12 @@ public class SizingStep1 : RenderModel
     public double CQLiq { get; set; }
     public double QLiq { get; set; }
     public double QLiqACFM { get; set; }
-}
-
-public class SizingStep2
-{
-
+    public string JHFSELEM { get; set; }
+    public double KELEM { get; set; }
+    public double ELEMPRICE { get; set; }
+    public double ELEMWEIGHT { get; set; }
+    public string ELEMSUP { get; set; }
+    public double ELEMOD { get; set; }
+    public double ELEMID { get; set; }
+    public double ELEMLEN { get; set; }
 }

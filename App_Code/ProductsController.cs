@@ -63,8 +63,11 @@ public class ProductsController : RenderMvcController
         ViewBag.UnitFlowL = new SelectList(Enum.GetValues(typeof(QLiqEnum))
                        .Cast<QLiqEnum>()
                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.JHFSELEM = new SelectList(Enum.GetValues(typeof(ElemEnum))
+               .Cast<ElemEnum>()
+               .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
 
-        var sizing = string.IsNullOrEmpty(id) ? null : new SizingStep1(model.Content);
+        var sizing = string.IsNullOrEmpty(id) ? null : new SizingModel(model.Content);
         if (sizing != null)
         {
             var product = UmbracoContext.ContentCache.GetSingleByXPath(string.Format(@"/root/descendant-or-self::*[@urlName='{0}']", id));
@@ -78,7 +81,7 @@ public class ProductsController : RenderMvcController
     }
 
     [HttpPost]
-    public ActionResult SizingStep1(SizingStep1 model)
+    public ActionResult SizingStep1(SizingModel model)
     {
         ViewBag.Title = "Sizing Step 1";
         ViewBag.SiteName = model.Content.GetProperty("siteName", true).Value;
@@ -102,34 +105,59 @@ public class ProductsController : RenderMvcController
             ConvertQGas(ref model);      
             //QLiq
             ConvertQLiq(ref model);
+            //Elem
+            GetElem(ref model);
 
-            //temporary
-            ViewBag.UnitTemp = new SelectList(Enum.GetValues(typeof(TempEnum))
-                            .Cast<TempEnum>()
-                            .Select(s => new { name = s.ToString(), value = s.ToString() }), "value", "name");
-            ViewBag.UnitPress = new SelectList(Enum.GetValues(typeof(PressEnum))
-                            .Cast<PressEnum>()
-                            .Select(s => new { name = s.ToString(), value = s.ToString() }), "value", "name");
-            ViewBag.UnitDenG = new SelectList(Enum.GetValues(typeof(DenGEnum))
-                            .Cast<DenGEnum>()
-                            .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-            ViewBag.UnitViscG = new SelectList(Enum.GetValues(typeof(ViscGEnum))
-                            .Cast<ViscGEnum>()
-                            .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-            ViewBag.UnitDenL = new SelectList(Enum.GetValues(typeof(DenLEnum))
-                            .Cast<DenLEnum>()
-                            .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-            ViewBag.UnitViscL = new SelectList(Enum.GetValues(typeof(ViscLEnum))
-                            .Cast<ViscLEnum>()
-                            .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-            ViewBag.UnitFlowG = new SelectList(Enum.GetValues(typeof(QGasEnum))
-                            .Cast<QGasEnum>()
-                            .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-            ViewBag.UnitFlowL = new SelectList(Enum.GetValues(typeof(QLiqEnum))
-                           .Cast<QLiqEnum>()
-                           .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
-
-            return Index(model);
+            //store Content
+            var contentService = Services.ContentService;
+            model.SizingName = Guid.NewGuid().ToString("n");
+            var contentSizing = contentService.CreateContent(model.SizingName, 1399, "sizingItem", SessionManager.UserLogin.UserId);
+            contentSizing.SetValue("userName", SessionManager.UserLogin.UserName);
+            contentSizing.SetValue("productName", model.ProductId);
+            contentSizing.SetValue("step", 1);
+            contentSizing.SetValue("unitTemp", model.UnitTemp);
+            contentSizing.SetValue("cTemp", model.CTemp);
+            contentSizing.SetValue("temp", model.Temp);
+            contentSizing.SetValue("tempR", model.TempR);
+            contentSizing.SetValue("unitPress", model.UnitPress);
+            contentSizing.SetValue("cPress", model.CPress);
+            contentSizing.SetValue("press", model.Press);
+            contentSizing.SetValue("unitDenG", model.UnitDenG);
+            contentSizing.SetValue("cDenG", model.CDenG);
+            contentSizing.SetValue("denG", model.DenG);
+            contentSizing.SetValue("denGSG", model.DenGSG);
+            contentSizing.SetValue("cZcomp", model.CZcomp);
+            contentSizing.SetValue("zcomp", model.Zcomp);
+            contentSizing.SetValue("unitViscG", model.UnitViscG);
+            contentSizing.SetValue("cViscG", model.CViscG);
+            contentSizing.SetValue("viscG", model.ViscG);
+            contentSizing.SetValue("unitDenL", model.UnitDenL);
+            contentSizing.SetValue("cDenL", model.CDenL);
+            contentSizing.SetValue("denL", model.DenL);
+            contentSizing.SetValue("denLSG", model.DenLSG);
+            contentSizing.SetValue("unitViscL", model.UnitViscL);
+            contentSizing.SetValue("cViscL", model.CViscL);
+            contentSizing.SetValue("viscL", model.ViscL);
+            contentSizing.SetValue("unitFlowG", model.UnitFlowG);
+            contentSizing.SetValue("cQGas", model.CQGas);
+            contentSizing.SetValue("qGas", model.QGas);
+            contentSizing.SetValue("qGasACFM", model.QGasACFM);
+            contentSizing.SetValue("qGasACFS", model.QGasACFS);
+            contentSizing.SetValue("unitFlowL", model.UnitFlowL);
+            contentSizing.SetValue("cQLiq", model.CQLiq);
+            contentSizing.SetValue("qLiq", model.QLiq);
+            contentSizing.SetValue("qLiqACFM", model.QLiqACFM);
+            contentSizing.SetValue("jHFSELEM", model.JHFSELEM);
+            contentSizing.SetValue("kELEM", model.KELEM);
+            contentSizing.SetValue("eLEMPRICE", model.ELEMPRICE);
+            contentSizing.SetValue("eLEMWEIGHT", model.ELEMWEIGHT);
+            contentSizing.SetValue("eLEMSUP", model.ELEMSUP);
+            contentSizing.SetValue("eLEMOD", model.ELEMOD);
+            contentSizing.SetValue("eLEMID", model.ELEMID);
+            contentSizing.SetValue("eLEMLEN", model.ELEMLEN);
+            contentService.Save(contentSizing);
+            TempData["step"] = model;
+            return RedirectToAction("SizingStep2", "Products", new { id = model.ProductId });
         }
         catch (Exception ex)
         {
@@ -137,15 +165,54 @@ public class ProductsController : RenderMvcController
         }
     }
 
-    public ActionResult SizingStep2(RenderModel model)
+    public ActionResult SizingStep2(RenderModel model, string id)
     {
         ViewBag.Title = "Sizing Step 2";
         ViewBag.SiteName = model.Content.GetProperty("siteName", true).Value;
+        if (TempData["step"] == null)
+        {
+            return RedirectToAction("SizingStep1", "Products", new { model, id });
+        }
 
-        return View("~/Views/SizingStep2.cshtml");
+        ViewBag.UnitTemp = new SelectList(Enum.GetValues(typeof(TempEnum))
+                      .Cast<TempEnum>()
+                      .Select(s => new { name = s.ToString(), value = s.ToString() }), "value", "name");
+        ViewBag.UnitPress = new SelectList(Enum.GetValues(typeof(PressEnum))
+                        .Cast<PressEnum>()
+                        .Select(s => new { name = s.ToString(), value = s.ToString() }), "value", "name");
+        ViewBag.UnitDenG = new SelectList(Enum.GetValues(typeof(DenGEnum))
+                        .Cast<DenGEnum>()
+                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.UnitViscG = new SelectList(Enum.GetValues(typeof(ViscGEnum))
+                        .Cast<ViscGEnum>()
+                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.UnitDenL = new SelectList(Enum.GetValues(typeof(DenLEnum))
+                        .Cast<DenLEnum>()
+                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.UnitViscL = new SelectList(Enum.GetValues(typeof(ViscLEnum))
+                        .Cast<ViscLEnum>()
+                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.UnitFlowG = new SelectList(Enum.GetValues(typeof(QGasEnum))
+                        .Cast<QGasEnum>()
+                        .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.UnitFlowL = new SelectList(Enum.GetValues(typeof(QLiqEnum))
+                       .Cast<QLiqEnum>()
+                       .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+        ViewBag.JHFSELEM = new SelectList(Enum.GetValues(typeof(ElemEnum))
+               .Cast<ElemEnum>()
+               .Select(s => new { name = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name, value = s.GetType().GetMember(s.ToString()).First().GetCustomAttributes(typeof(DisplayAttribute), false).Cast<DisplayAttribute>().First().Name }), "value", "name");
+
+
+        return Index((SizingModel)TempData["step"]);
     }
 
-    public ActionResult SizingStep3(RenderModel model)
+    [HttpPost]
+    public ActionResult SizingStep2(SizingModel model)
+    {
+        return RedirectToAction("SizingStep3", "Products", new { id = model.ProductId });
+    }
+
+    public ActionResult SizingStep3(RenderModel model, string id)
     {
         ViewBag.Title = "Sizing Step 3";
         ViewBag.SiteName = model.Content.GetProperty("siteName", true).Value;
@@ -153,7 +220,7 @@ public class ProductsController : RenderMvcController
         return View("~/Views/SizingStep3.cshtml");
     }
 
-    private void ConvertTemp(ref SizingStep1 model)
+    private void ConvertTemp(ref SizingModel model)
     {
         //load Formula Temp, TempR
         var fTemp = UmbracoContext.ContentCache.GetById(1386).GetProperty("cal").Value.ToString();
@@ -174,7 +241,7 @@ public class ProductsController : RenderMvcController
         model.TempR = cTemp.TempR;
     }
 
-    private void ConvertPress(ref SizingStep1 model)
+    private void ConvertPress(ref SizingModel model)
     {
         //load Formula Press
         var fPress = UmbracoContext.ContentCache.GetById(1388).GetProperty("cal").Value.ToString();
@@ -193,7 +260,7 @@ public class ProductsController : RenderMvcController
         //Result
         model.Press = cPress.Press;
     }
-    private void ConvertZComp(ref SizingStep1 model)
+    private void ConvertZComp(ref SizingModel model)
     {
         //load Formula Zcomp
         var fZcomp = UmbracoContext.ContentCache.GetById(1389).GetProperty("cal").Value.ToString();
@@ -213,7 +280,7 @@ public class ProductsController : RenderMvcController
         model.Zcomp = cZcomp.Zcomp;
     }
 
-    private void ConvertDenG(ref SizingStep1 model)
+    private void ConvertDenG(ref SizingModel model)
     {
         //load Formula DenG
         var fDenG = UmbracoContext.ContentCache.GetById(1390).GetProperty("cal").Value.ToString();
@@ -234,7 +301,7 @@ public class ProductsController : RenderMvcController
         model.DenGSG = cDenG.DenGSG;
     }
 
-    private void ConvertViscG(ref SizingStep1 model)
+    private void ConvertViscG(ref SizingModel model)
     {
         //load Formula ViscG
         var fViscG = UmbracoContext.ContentCache.GetById(1391).GetProperty("cal").Value.ToString();
@@ -254,7 +321,7 @@ public class ProductsController : RenderMvcController
         model.ViscG = cViscG.ViscG;
     }
 
-    private void ConvertDenL(ref SizingStep1 model)
+    private void ConvertDenL(ref SizingModel model)
     {
         //load Formula DenL
         var fDenL = UmbracoContext.ContentCache.GetById(1392).GetProperty("cal").Value.ToString();
@@ -275,7 +342,7 @@ public class ProductsController : RenderMvcController
         model.DenLSG = cDenL.DenLSG;
     }
 
-    private void ConvertViscL(ref SizingStep1 model)
+    private void ConvertViscL(ref SizingModel model)
     {
         //load Formula ViscL
         var fViscL = UmbracoContext.ContentCache.GetById(1393).GetProperty("cal").Value.ToString();
@@ -295,7 +362,7 @@ public class ProductsController : RenderMvcController
         model.ViscL = cViscL.ViscL;
     }
 
-    private void ConvertQGas(ref SizingStep1 model)
+    private void ConvertQGas(ref SizingModel model)
     {
         //load Formula QGas
         var fQGas = UmbracoContext.ContentCache.GetById(1394).GetProperty("cal").Value.ToString();
@@ -317,7 +384,7 @@ public class ProductsController : RenderMvcController
         model.QGasACFS = cQGas.QGasACFS;
     }
 
-    private void ConvertQLiq(ref SizingStep1 model)
+    private void ConvertQLiq(ref SizingModel model)
     {
         //load Formula QLiq
         var fQLiq = UmbracoContext.ContentCache.GetById(1395).GetProperty("cal").Value.ToString();
@@ -336,5 +403,31 @@ public class ProductsController : RenderMvcController
         //Result
         model.QLiq = cQLiq.QLiq;
         model.QLiqACFM = cQLiq.QLiqACFM;
+    }
+
+    private void GetElem(ref SizingModel model)
+    {
+        //load Formula Elem
+        var fElem = UmbracoContext.ContentCache.GetById(1396).GetProperty("cal").Value.ToString();
+        //calculate Elem
+        var cElem = new GetElem { JHFSELEM = model.JHFSELEM};
+        var parsefElem = fElem.Replace("$", "cElem.");
+        var reg = new TypeRegistry();
+        reg.RegisterSymbol("cElem", cElem);
+        var process = new CompiledExpression(parsefElem)
+        {
+            TypeRegistry = reg,
+            ExpressionType = CompiledExpressionType.StatementList
+        };
+        process.Compile();
+        process.Eval();
+        //Result
+        model.ELEMID = cElem.ELEMID;
+        model.ELEMLEN = cElem.ELEMLEN;
+        model.ELEMOD = cElem.ELEMOD;
+        model.ELEMPRICE = cElem.ELEMPRICE;
+        model.ELEMSUP = cElem.ELEMSUP;
+        model.ELEMWEIGHT = cElem.ELEMWEIGHT;
+        model.KELEM = cElem.KELEM;
     }
 }

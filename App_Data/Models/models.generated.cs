@@ -19,7 +19,7 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "eaf7c274ce019393")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e0be480360babfec")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedContentModels
@@ -1852,6 +1852,445 @@ namespace Umbraco.Web.PublishedContentModels
 		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<FormulaOverview, TValue>> selector)
 		{
 			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>Sizing Overview</summary>
+	[PublishedContentModel("sizingOverview")]
+	public partial class SizingOverview : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "sizingOverview";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public SizingOverview(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<SizingOverview, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+	}
+
+	/// <summary>Sizing Item</summary>
+	[PublishedContentModel("sizingItem")]
+	public partial class SizingItem : PublishedContentModel
+	{
+#pragma warning disable 0109 // new is redundant
+		public new const string ModelTypeAlias = "sizingItem";
+		public new const PublishedItemType ModelItemType = PublishedItemType.Content;
+#pragma warning restore 0109
+
+		public SizingItem(IPublishedContent content)
+			: base(content)
+		{ }
+
+#pragma warning disable 0109 // new is redundant
+		public new static PublishedContentType GetModelContentType()
+		{
+			return PublishedContentType.Get(ModelItemType, ModelTypeAlias);
+		}
+#pragma warning restore 0109
+
+		public static PublishedPropertyType GetModelPropertyType<TValue>(Expression<Func<SizingItem, TValue>> selector)
+		{
+			return PublishedContentModelUtility.GetModelPropertyType(GetModelContentType(), selector);
+		}
+
+		///<summary>
+		/// CDenG
+		///</summary>
+		[ImplementPropertyType("cDenG")]
+		public string CDenG
+		{
+			get { return this.GetPropertyValue<string>("cDenG"); }
+		}
+
+		///<summary>
+		/// CDenL
+		///</summary>
+		[ImplementPropertyType("cDenL")]
+		public string CDenL
+		{
+			get { return this.GetPropertyValue<string>("cDenL"); }
+		}
+
+		///<summary>
+		/// CPress
+		///</summary>
+		[ImplementPropertyType("cPress")]
+		public string CPress
+		{
+			get { return this.GetPropertyValue<string>("cPress"); }
+		}
+
+		///<summary>
+		/// CQGas
+		///</summary>
+		[ImplementPropertyType("cQGas")]
+		public string CQgas
+		{
+			get { return this.GetPropertyValue<string>("cQGas"); }
+		}
+
+		///<summary>
+		/// CQLiq
+		///</summary>
+		[ImplementPropertyType("cQLiq")]
+		public string CQliq
+		{
+			get { return this.GetPropertyValue<string>("cQLiq"); }
+		}
+
+		///<summary>
+		/// CTemp
+		///</summary>
+		[ImplementPropertyType("cTemp")]
+		public string CTemp
+		{
+			get { return this.GetPropertyValue<string>("cTemp"); }
+		}
+
+		///<summary>
+		/// CViscG
+		///</summary>
+		[ImplementPropertyType("cViscG")]
+		public string CViscG
+		{
+			get { return this.GetPropertyValue<string>("cViscG"); }
+		}
+
+		///<summary>
+		/// CViscL
+		///</summary>
+		[ImplementPropertyType("cViscL")]
+		public string CViscL
+		{
+			get { return this.GetPropertyValue<string>("cViscL"); }
+		}
+
+		///<summary>
+		/// CZcomp
+		///</summary>
+		[ImplementPropertyType("cZcomp")]
+		public string CZcomp
+		{
+			get { return this.GetPropertyValue<string>("cZcomp"); }
+		}
+
+		///<summary>
+		/// DenG
+		///</summary>
+		[ImplementPropertyType("denG")]
+		public string DenG
+		{
+			get { return this.GetPropertyValue<string>("denG"); }
+		}
+
+		///<summary>
+		/// DenGSG
+		///</summary>
+		[ImplementPropertyType("denGSG")]
+		public string DenGsg
+		{
+			get { return this.GetPropertyValue<string>("denGSG"); }
+		}
+
+		///<summary>
+		/// DenL
+		///</summary>
+		[ImplementPropertyType("denL")]
+		public string DenL
+		{
+			get { return this.GetPropertyValue<string>("denL"); }
+		}
+
+		///<summary>
+		/// DenLSG
+		///</summary>
+		[ImplementPropertyType("denLSG")]
+		public string DenLsg
+		{
+			get { return this.GetPropertyValue<string>("denLSG"); }
+		}
+
+		///<summary>
+		/// ELEMID
+		///</summary>
+		[ImplementPropertyType("eLEMID")]
+		public string ELemid
+		{
+			get { return this.GetPropertyValue<string>("eLEMID"); }
+		}
+
+		///<summary>
+		/// ELEMLEN
+		///</summary>
+		[ImplementPropertyType("eLEMLEN")]
+		public string ELemlen
+		{
+			get { return this.GetPropertyValue<string>("eLEMLEN"); }
+		}
+
+		///<summary>
+		/// ELEMOD
+		///</summary>
+		[ImplementPropertyType("eLEMOD")]
+		public string ELemod
+		{
+			get { return this.GetPropertyValue<string>("eLEMOD"); }
+		}
+
+		///<summary>
+		/// ELEMPRICE
+		///</summary>
+		[ImplementPropertyType("eLEMPRICE")]
+		public string ELemprice
+		{
+			get { return this.GetPropertyValue<string>("eLEMPRICE"); }
+		}
+
+		///<summary>
+		/// ELEMSUP
+		///</summary>
+		[ImplementPropertyType("eLEMSUP")]
+		public string ELemsup
+		{
+			get { return this.GetPropertyValue<string>("eLEMSUP"); }
+		}
+
+		///<summary>
+		/// ELEMWEIGHT
+		///</summary>
+		[ImplementPropertyType("eLEMWEIGHT")]
+		public string ELemweight
+		{
+			get { return this.GetPropertyValue<string>("eLEMWEIGHT"); }
+		}
+
+		///<summary>
+		/// JHFSELEM
+		///</summary>
+		[ImplementPropertyType("jHFSELEM")]
+		public string JHfselem
+		{
+			get { return this.GetPropertyValue<string>("jHFSELEM"); }
+		}
+
+		///<summary>
+		/// KELEM
+		///</summary>
+		[ImplementPropertyType("kELEM")]
+		public string KElem
+		{
+			get { return this.GetPropertyValue<string>("kELEM"); }
+		}
+
+		///<summary>
+		/// Press
+		///</summary>
+		[ImplementPropertyType("press")]
+		public string Press
+		{
+			get { return this.GetPropertyValue<string>("press"); }
+		}
+
+		///<summary>
+		/// ProductName
+		///</summary>
+		[ImplementPropertyType("productName")]
+		public string ProductName
+		{
+			get { return this.GetPropertyValue<string>("productName"); }
+		}
+
+		///<summary>
+		/// QGas
+		///</summary>
+		[ImplementPropertyType("qGas")]
+		public string QGas
+		{
+			get { return this.GetPropertyValue<string>("qGas"); }
+		}
+
+		///<summary>
+		/// QGasACFM
+		///</summary>
+		[ImplementPropertyType("qGasACFM")]
+		public string QGasAcfm
+		{
+			get { return this.GetPropertyValue<string>("qGasACFM"); }
+		}
+
+		///<summary>
+		/// QGasACFS
+		///</summary>
+		[ImplementPropertyType("qGasACFS")]
+		public string QGasAcfs
+		{
+			get { return this.GetPropertyValue<string>("qGasACFS"); }
+		}
+
+		///<summary>
+		/// QLiq
+		///</summary>
+		[ImplementPropertyType("qLiq")]
+		public string QLiq
+		{
+			get { return this.GetPropertyValue<string>("qLiq"); }
+		}
+
+		///<summary>
+		/// QLiqACFM
+		///</summary>
+		[ImplementPropertyType("qLiqACFM")]
+		public string QLiqAcfm
+		{
+			get { return this.GetPropertyValue<string>("qLiqACFM"); }
+		}
+
+		///<summary>
+		/// Step
+		///</summary>
+		[ImplementPropertyType("step")]
+		public string Step
+		{
+			get { return this.GetPropertyValue<string>("step"); }
+		}
+
+		///<summary>
+		/// Temp
+		///</summary>
+		[ImplementPropertyType("temp")]
+		public string Temp
+		{
+			get { return this.GetPropertyValue<string>("temp"); }
+		}
+
+		///<summary>
+		/// TempR
+		///</summary>
+		[ImplementPropertyType("tempR")]
+		public string TempR
+		{
+			get { return this.GetPropertyValue<string>("tempR"); }
+		}
+
+		///<summary>
+		/// UnitDenG
+		///</summary>
+		[ImplementPropertyType("unitDenG")]
+		public string UnitDenG
+		{
+			get { return this.GetPropertyValue<string>("unitDenG"); }
+		}
+
+		///<summary>
+		/// UnitDenL
+		///</summary>
+		[ImplementPropertyType("unitDenL")]
+		public string UnitDenL
+		{
+			get { return this.GetPropertyValue<string>("unitDenL"); }
+		}
+
+		///<summary>
+		/// UnitFlowG
+		///</summary>
+		[ImplementPropertyType("unitFlowG")]
+		public string UnitFlowG
+		{
+			get { return this.GetPropertyValue<string>("unitFlowG"); }
+		}
+
+		///<summary>
+		/// UnitFlowL
+		///</summary>
+		[ImplementPropertyType("unitFlowL")]
+		public string UnitFlowL
+		{
+			get { return this.GetPropertyValue<string>("unitFlowL"); }
+		}
+
+		///<summary>
+		/// UnitPress
+		///</summary>
+		[ImplementPropertyType("unitPress")]
+		public string UnitPress
+		{
+			get { return this.GetPropertyValue<string>("unitPress"); }
+		}
+
+		///<summary>
+		/// UnitTemp
+		///</summary>
+		[ImplementPropertyType("unitTemp")]
+		public string UnitTemp
+		{
+			get { return this.GetPropertyValue<string>("unitTemp"); }
+		}
+
+		///<summary>
+		/// UnitViscG
+		///</summary>
+		[ImplementPropertyType("unitViscG")]
+		public string UnitViscG
+		{
+			get { return this.GetPropertyValue<string>("unitViscG"); }
+		}
+
+		///<summary>
+		/// UnitViscL
+		///</summary>
+		[ImplementPropertyType("unitViscL")]
+		public string UnitViscL
+		{
+			get { return this.GetPropertyValue<string>("unitViscL"); }
+		}
+
+		///<summary>
+		/// UserName
+		///</summary>
+		[ImplementPropertyType("userName")]
+		public string UserName
+		{
+			get { return this.GetPropertyValue<string>("userName"); }
+		}
+
+		///<summary>
+		/// ViscG
+		///</summary>
+		[ImplementPropertyType("viscG")]
+		public string ViscG
+		{
+			get { return this.GetPropertyValue<string>("viscG"); }
+		}
+
+		///<summary>
+		/// ViscL
+		///</summary>
+		[ImplementPropertyType("viscL")]
+		public string ViscL
+		{
+			get { return this.GetPropertyValue<string>("viscL"); }
+		}
+
+		///<summary>
+		/// Zcomp
+		///</summary>
+		[ImplementPropertyType("zcomp")]
+		public string Zcomp
+		{
+			get { return this.GetPropertyValue<string>("zcomp"); }
 		}
 	}
 

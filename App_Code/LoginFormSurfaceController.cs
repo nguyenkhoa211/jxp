@@ -35,6 +35,7 @@ public class LoginFormSurfaceController : SurfaceController
         {
             SessionManager.UserLogin = new UserViewModel
             {
+                UserId = user.Id,
                 UserName = user.GetValue<string>("userName"),
                 FullName = user.GetValue<string>("fullName"),
                 Email = user.GetValue<string>("email"),

@@ -1,4 +1,4 @@
-﻿@inherits UmbracoViewPage<SizingStep1>
+﻿@inherits UmbracoViewPage<SizingModel>
 @{
     Layout = "PortalLayout.cshtml";
 }
@@ -10,145 +10,109 @@
 
     @using (Html.BeginForm("SizingStep1", "Products", FormMethod.Post))
     {
-        <div class="row uniform box">
+        <div class="row uniform box 10u$" style="margin: 0 auto">
             <div class="12u 12u$(small)">
                 <h3>JXP @Model.ProductName Sizing. Please enter the information below</h3>
                 @Html.HiddenFor(m => m.ProductId)
+                @Html.HiddenFor(m => m.ProductName)
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Operating Temp:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitTemp")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CTemp, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="3u 12u$(small)">
-                <span>Temp: @Model.Temp</span>
-            </div>
-            <div class="3u$ 12u$(small)">
-                <span>TempR: @Model.TempR</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Operating Pressure:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitPress")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CPress, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="6u$ 12u$(small)">
-                <span>Press: @Model.Press</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Comp Factor,Z</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
 
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CZcomp, new { type = "number", min = "1", step = "0.001" })
             </div>
-            <div class="6u$ 12u$(small)">
-                <span>Zcomp: @Model.Zcomp</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Gas Density:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitDenG")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CDenG, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="3u 12u$(small)">
-                <span>DenG: @Model.DenG</span>
-            </div>
-            <div class="3u$ 12u$(small)">
-                <span>DenGSG: @Model.DenGSG</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Gas Viscosity:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitViscG")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CViscG, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="6u$ 12u$(small)">
-                <span>ViscG: @Model.ViscG</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Liquid Density:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitDenL")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CDenL, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="3u 12u$(small)">
-                <span>DenL: @Model.DenL</span>
-            </div>
-            <div class="3u$ 12u$(small)">
-                <span>DenLSG: @Model.DenLSG</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Liquid Viscosity:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitViscL")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CViscL, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="6u$ 12u$(small)">
-                <span>ViscL: @Model.ViscL</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Gas Flowrate:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitFlowG")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CQGas, new { type = "number", min = "0", step = "0.001" })
             </div>
-            <div class="2u 12u$(small)">
-                <span>QGas: @Model.QGas</span>
-            </div>
-            <div class="2u 12u$(small)">
-                <span>QGasACFM: @Model.QGasACFM</span>
-            </div>
-            <div class="2u$ 12u$(small)">
-                <span>QGasACFS: @Model.QGasACFS</span>
-            </div>
             <!-- Break -->
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 <span>Liquid Flowrate:</span>
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u 12u$(small)">
                 @Html.DropDownList("UnitFlowL")
             </div>
-            <div class="2u 12u$(small)">
+            <div class="4u$ 12u$(small)">
                 @Html.TextBoxFor(m => m.CQLiq, new {type = "number", min = "0", step = "0.001"})
             </div>
-            <div class="3u 12u$(small)">
-                <span>QLiq: @Model.QLiq</span>
+            <!-- Break -->
+            <div class="4u 12u$(small)">
+                <span>Element Requested:</span>
             </div>
-            <div class="3u$ 12u$(small)">
-                <span>QLiqACFM: @Model.QLiqACFM</span>
+            <div class="8u$ 12u$(small)">
+                @Html.DropDownList("JHFSELEM")
             </div>
+            <!-- Break -->
             <div class="12u$">
                 <ul class="actions" style="float: right">
                     <li><input type="reset" value="Reset" /></li>
