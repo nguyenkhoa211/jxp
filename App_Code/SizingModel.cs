@@ -6,13 +6,58 @@ public class SizingModel : RenderModel
 {
     public SizingModel() : base(UmbracoContext.Current.ContentCache.GetById(1373))
     {
-
+        CTemp = .1;
+        CPress = .1;
+        CDenG = .1;
+        CZcomp = .1;
+        CViscG = .1;
+        CDenL = .1;
+        CViscL = .1;
+        CQGas = .1;
+        CQLiq = .1;
+        CVESSELID = .1;
+        CNUMELEM = .1;
+        CNOZZLEID = .1;
+        CNOZZLEOD = .1;
+        CMINWELDGAP = .1;
+        CMOCRISER = .1;
+        CMOCSEP = .1;
+        CPANDP = .1;
+        CPMI = .1;
+        MAXVJHFSELEM = .1;
+        MAXDPJHFSELEM = .1;
+        MAXK2JHFS = .1;
+        MAXK3JHFS = .1;
+        MAXRV2JHFS = .1;
     }
     public SizingModel(IPublishedContent content) : base(content)
     {
-        CZcomp = 1;
+        CTemp = .1;
+        CPress = .1;
+        CDenG = .1;
+        CZcomp = .1;
+        CViscG = .1;
+        CDenL = .1;
+        CViscL = .1;
+        CQGas = .1;
+        CQLiq = .1;
+        CVESSELID = .1;
+        CNUMELEM = .1;
+        CNOZZLEID = .1;
+        CNOZZLEOD = .1;
+        CMINWELDGAP = .1;
+        CMOCRISER = .1;
+        CMOCSEP = .1;
+        CPANDP = .1;
+        CPMI = .1;
+        MAXVJHFSELEM = .1;
+        MAXDPJHFSELEM = .1;
+        MAXK2JHFS = .1;
+        MAXK3JHFS = .1;
+        MAXRV2JHFS = .1;
     }
     public string SizingName { get; set; }
+    public int Step { get; set; }
     public string ProductId { get; set; }
     public string ProductName { get; set; }
     public string UnitTemp { get; set; }
@@ -55,4 +100,20 @@ public class SizingModel : RenderModel
     public double ELEMOD { get; set; }
     public double ELEMID { get; set; }
     public double ELEMLEN { get; set; }
+    public string JHFSSEP { get; set; }
+    public double MAXVJHFSELEM { get; set; }
+    public double MAXDPJHFSELEM { get; set; }
+    public double MAXK2JHFS { get; set; }
+    public double MAXK3JHFS { get; set; }
+    public double MAXRV2JHFS { get; set; }
+    public double CVESSELID { get; set; }
+    public double CNUMELEM { get; set; }
+    public double CNOZZLEID { get; set; }
+    public double CNOZZLEOD { get; set; }
+    public double CMINWELDGAP { get; set; }
+    public double CMOCRISER { get; set; }
+    public double CMOCSEP { get; set; }
+    public double CPANDP { get; set; }
+    public double CPMI { get; set; }
+    public double NumElem { get; set; }
 }

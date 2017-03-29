@@ -15,6 +15,7 @@
                 <h3>JXP @Model.ProductName Sizing. Please enter the information below</h3>
                 @Html.HiddenFor(m => m.ProductId)
                 @Html.HiddenFor(m => m.ProductName)
+                @Html.HiddenFor(m => m.SizingName)
             </div>
             <div class="4u 12u$(small)">
                 <span>Operating Temp:</span>
@@ -23,7 +24,7 @@
                 @Html.DropDownList("UnitTemp")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CTemp, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CTemp, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -33,7 +34,7 @@
                 @Html.DropDownList("UnitPress")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CPress, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CPress, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -43,7 +44,7 @@
 
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CZcomp, new { type = "number", min = "1", step = "0.001" })
+                @Html.TextBoxFor(m => m.CZcomp, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -53,7 +54,7 @@
                 @Html.DropDownList("UnitDenG")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CDenG, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CDenG, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -63,7 +64,7 @@
                 @Html.DropDownList("UnitViscG")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CViscG, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CViscG, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -73,7 +74,7 @@
                 @Html.DropDownList("UnitDenL")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CDenL, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CDenL, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -83,7 +84,7 @@
                 @Html.DropDownList("UnitViscL")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CViscL, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CViscL, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -93,7 +94,7 @@
                 @Html.DropDownList("UnitFlowG")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CQGas, new { type = "number", min = "0", step = "0.001" })
+                @Html.TextBoxFor(m => m.CQGas, new { type = "number", min = "0.001", step = "0.001" })
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -103,7 +104,7 @@
                 @Html.DropDownList("UnitFlowL")
             </div>
             <div class="4u$ 12u$(small)">
-                @Html.TextBoxFor(m => m.CQLiq, new {type = "number", min = "0", step = "0.001"})
+                @Html.TextBoxFor(m => m.CQLiq, new {type = "number", min = "0.001", step = "0.001"})
             </div>
             <!-- Break -->
             <div class="4u 12u$(small)">
@@ -111,6 +112,13 @@
             </div>
             <div class="8u$ 12u$(small)">
                 @Html.DropDownList("JHFSELEM")
+            </div>
+            <!-- Break -->
+            <div class="4u 12u$(small)">
+                <span>Separator Style:</span>
+            </div>
+            <div class="8u$ 12u$(small)">
+                @Html.DropDownList("JHFSSEP")
             </div>
             <!-- Break -->
             <div class="12u$">

@@ -19,7 +19,7 @@ using Umbraco.ModelsBuilder;
 using Umbraco.ModelsBuilder.Umbraco;
 
 [assembly: PureLiveAssembly]
-[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "e0be480360babfec")]
+[assembly:ModelsBuilderAssembly(PureLive = true, SourceHash = "3cda8962d7ccb90f")]
 [assembly:System.Reflection.AssemblyVersion("0.0.0.2")]
 
 namespace Umbraco.Web.PublishedContentModels
@@ -843,6 +843,51 @@ namespace Umbraco.Web.PublishedContentModels
 		public string FullName
 		{
 			get { return this.GetPropertyValue<string>("fullName"); }
+		}
+
+		///<summary>
+		/// MAXDPJHFSELEM
+		///</summary>
+		[ImplementPropertyType("mAXDPJHFSELEM")]
+		public string MAxdpjhfselem
+		{
+			get { return this.GetPropertyValue<string>("mAXDPJHFSELEM"); }
+		}
+
+		///<summary>
+		/// MAXK2JHFS
+		///</summary>
+		[ImplementPropertyType("mAXK2JHFS")]
+		public string MAxk2Jhfs
+		{
+			get { return this.GetPropertyValue<string>("mAXK2JHFS"); }
+		}
+
+		///<summary>
+		/// MAXK3JHFS
+		///</summary>
+		[ImplementPropertyType("mAXK3JHFS")]
+		public string MAxk3Jhfs
+		{
+			get { return this.GetPropertyValue<string>("mAXK3JHFS"); }
+		}
+
+		///<summary>
+		/// MAXRV2JHFS
+		///</summary>
+		[ImplementPropertyType("mAXRV2JHFS")]
+		public string MAxrv2Jhfs
+		{
+			get { return this.GetPropertyValue<string>("mAXRV2JHFS"); }
+		}
+
+		///<summary>
+		/// MAXVJHFSELEM
+		///</summary>
+		[ImplementPropertyType("mAXVJHFSELEM")]
+		public string MAxvjhfselem
+		{
+			get { return this.GetPropertyValue<string>("mAXVJHFSELEM"); }
 		}
 
 		///<summary>
@@ -2087,12 +2132,30 @@ namespace Umbraco.Web.PublishedContentModels
 		}
 
 		///<summary>
+		/// JHFSSEP
+		///</summary>
+		[ImplementPropertyType("jHFSSEP")]
+		public string JHfssep
+		{
+			get { return this.GetPropertyValue<string>("jHFSSEP"); }
+		}
+
+		///<summary>
 		/// KELEM
 		///</summary>
 		[ImplementPropertyType("kELEM")]
 		public string KElem
 		{
 			get { return this.GetPropertyValue<string>("kELEM"); }
+		}
+
+		///<summary>
+		/// NumElem
+		///</summary>
+		[ImplementPropertyType("numElem")]
+		public string NumElem
+		{
+			get { return this.GetPropertyValue<string>("numElem"); }
 		}
 
 		///<summary>
